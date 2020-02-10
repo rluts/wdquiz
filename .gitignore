@@ -1,0 +1,12 @@
+.venv/
+venv
+env/
+.env/
+
+.idea/
+
+.env
+*.pyc
+
+alembic.ini
+!db/alembic/env.py
