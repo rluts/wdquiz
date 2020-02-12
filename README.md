@@ -1,3 +1,3 @@
-#In development
+# In development
 
-Example project how to use Wikidata for data factories
+Quiz app with using Wikidata for data factories
