@@ -1,6 +1,9 @@
+from datetime import datetime
+
 import sqlalchemy as db
 from sqlalchemy.orm import relationship
 
+from backends import Backends
 from . import Base
 from .utils import get_expired_datetime
 
@@ -9,6 +12,8 @@ class User(Base):
     __tablename__ = 'users'
 
     id = db.Column(db.BIGINT, primary_key=True)
+    external_id = db.Column(db.BIGINT, index=True)
+    backend = db.Column(db.String, index=True)
     created_games = relationship(
         'Game', foreign_keys='Game.initiator_id', back_populates='initiator')
     participants_games = relationship(
@@ -16,7 +21,6 @@ class User(Base):
         back_populates='participant')
     answers = relationship('Answer', back_populates='user')
     questions = relationship('Question', back_populates='associated_user')
-    question_number = db.Column(db.Integer, default=0)
     is_superuser = db.Column(db.Boolean, default=False)
 
 
@@ -51,12 +55,22 @@ class Game(Base):
     initiator_id = db.Column(db.BIGINT, db.ForeignKey('users.id'))
     participant_id = db.Column(db.BIGINT, db.ForeignKey('users.id'),
                                nullable=True)
+    category_id = db.Column(db.BIGINT, db.ForeignKey('object_categories.id'))
+    room_id = db.Column(db.BIGINT, index=True)
+    backend = db.Column(db.String, index=True)
+    created_time = db.Column(db.DateTime, default=datetime.now)
+    started = db.Column(db.Boolean, default=False)
+    finished = db.Column(db.Boolean, default=False)
+    start_time = db.Column(db.DateTime, nullable=True)
+    end_time = db.Column(db.DateTime, nullable=True)
+
     initiator = relationship(
         'User', foreign_keys='Game.initiator_id',
         back_populates='created_games')
     participant = relationship('User', foreign_keys='Game.participant_id',
                                back_populates='participants_games')
     questions = relationship('Question', back_populates='game')
+    category = relationship('ObjectCategory', back_populates='games')
 
 
 class Object(Base):
@@ -77,12 +91,13 @@ class Object(Base):
 class ObjectCategory(Base):
     __tablename__ = 'object_categories'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.BIGINT, primary_key=True)
     wikidata_parent_entity = db.Column(db.String, nullable=True)
     name = db.Column(db.String)
 
     objects = relationship('Object', back_populates='category')
     question_types = relationship('QuestionType', back_populates='category')
+    games = relationship('Game', back_populates='category')
 
 
 class ObjectAlias(Base):
