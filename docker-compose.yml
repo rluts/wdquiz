@@ -1,0 +1,27 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:10
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+    - 5439:5432
+    environment:
+      - POSTGRES_DB=wdquizdb
+      - POSTGRES_USER=wdquizdbuser
+      - POSTGRES_PASSWORD=wdquizdbpassword
+  app:
+    build: .
+    command: alembic upgrade head && tail -f /dev/null
+    volumes:
+      - .:/app
+      - ./media:/app/media
+      - ./.bash_history:/root/.bash_history
+    depends_on:
+      - postgres
+    environment:
+      - IPYTHONDIR=/app/.ipython
+    env_file:
+      - .env
+volumes:
+  postgres_data:

@@ -11,3 +11,6 @@ env/
 alembic.ini
 !db/alembic/env.py
 media/*
+
+.bash_history
+.ipython

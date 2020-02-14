@@ -35,7 +35,7 @@ revision_environment = true
 # are written from script.py.mako
 # output_encoding = utf-8
 
-sqlalchemy.url = postgresql://user:pass@localhost/db_name
+sqlalchemy.url = postgresql://wdquizdbuser:wdquizdbpassword@postgres/wdquizdb
 
 
 [post_write_hooks]
