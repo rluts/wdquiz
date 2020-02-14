@@ -19,6 +19,7 @@ class BackendDoesNotExist(WDQuizError):
 
 class FileTypeError(WDQuizError):
     msg = 'File type not allowed'
+    code = 404
 
 
 class NotFoundError(WDQuizError):

@@ -10,4 +10,3 @@ class WDQuizEnum(enum.Enum):
 class Backends(WDQuizEnum):
     telegram = 'telegram'
     api = 'api'
-

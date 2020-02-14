@@ -5,10 +5,14 @@ CairoSVG==2.4.2
 certifi==2019.11.28
 cffi==1.14.0
 chardet==3.0.4
+Click==7.0
 cssselect2==0.2.2
 defusedxml==0.6.0
+Flask==1.1.1
 idna==2.8
 isodate==0.6.0
+itsdangerous==1.1.0
+Jinja2==2.11.1
 Mako==1.1.1
 MarkupSafe==1.1.1
 Pillow==7.0.0
@@ -28,4 +32,5 @@ sqlparse==0.3.0
 tinycss2==1.0.2
 urllib3==1.25.8
 webencodings==0.5.1
+Werkzeug==1.0.0
 Wikidata==0.6.1
