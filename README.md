@@ -39,3 +39,6 @@ See on Wikidata:
 * Multiple game
 * Telegram bot
 * and more others
+
+## ISSUES
+* Very slow /ask/ endpoint. A lot of time spent SVG to PNG converting (needs for Telegram bot)
