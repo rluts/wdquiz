@@ -38,7 +38,7 @@ See on Wikidata:
 * Add support for text and coords question
 * Multiple game
 * Telegram bot
-* and more others
+* example react app
 
 ## ISSUES
 * Very slow /ask/ endpoint. A lot of time spent SVG to PNG converting (needs for Telegram bot)

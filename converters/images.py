@@ -5,9 +5,9 @@ from .files import File
 class Image(File):
     allowed_types = ['svg', 'jpg', 'jpeg', 'png']
 
-    def __init__(self, url: str, prefix: int):
+    def __init__(self, url: str, prefix: int, convert_svg=True):
         super().__init__(url, prefix)
-        if self.file_type == 'svg':
+        if convert_svg and self.file_type == 'svg':
             self.convert_svg()
 
     def convert_svg(self):

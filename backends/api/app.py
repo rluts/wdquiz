@@ -15,19 +15,20 @@ BACKEND = 'api'
 
 @app.route('/ask', methods=['POST'])
 def ask():
+    quiz = Quiz(
+        initiator=ANONYMOUS_USER_ID,
+        category_id=SPA_GAME_CATEGORY_ID,
+        room_id=SPA_ROOM_ID,
+        backend=BACKEND
+    )
+    img, answers = quiz.img_ask()
+
     try:
-        quiz = Quiz(
-            initiator=ANONYMOUS_USER_ID,
-            category_id=SPA_GAME_CATEGORY_ID,
-            room_id=SPA_ROOM_ID,
-            backend=BACKEND
-        )
-        img, answers = quiz.img_ask()
+        image = Image(img, quiz.room_id)
+        image = str(image).split('/')[-1]
+        return jsonify(url=f'media/{image}')
     except (FileTypeError, NotFoundError) as e:
         return e.msg, e.code
-    try:
-        image = str(Image(img, quiz.room_id)).split('/')[-1]
-        return jsonify(url=f'media/{image}')
     except AttributeError:
         return "Image not found", 404
 
