@@ -27,7 +27,7 @@ def ask():
         return e.msg, e.code
     try:
         image = str(Image(img, quiz.room_id)).split('/')[-1]
-        return jsonify(url=image)
+        return jsonify(url=f'media/{image}')
     except AttributeError:
         return "Image not found", 404
 
