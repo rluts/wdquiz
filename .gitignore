@@ -10,3 +10,4 @@ env/
 
 alembic.ini
 !db/alembic/env.py
+media/*

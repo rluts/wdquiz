@@ -1,7 +1,7 @@
 class WDQuizError(Exception):
     def __init__(self):
         msg = getattr(self.__class__, 'msg', 'Unknown Error')
-        code = getattr(self.__class__, 'code', '500_INTERNAL_ERROR')
+        code = getattr(self.__class__, 'code', 500)
         super().__init__(code, msg)
 
 
@@ -15,3 +15,12 @@ class WikidataResultError(WDQuizError):
 
 class BackendDoesNotExist(WDQuizError):
     msg = 'Backend does not exist'
+
+
+class FileTypeError(WDQuizError):
+    msg = 'File type not allowed'
+
+
+class NotFoundError(WDQuizError):
+    msg = 'File type not allowed'
+    code = 404

@@ -3,7 +3,6 @@ from datetime import datetime
 import sqlalchemy as db
 from sqlalchemy.orm import relationship
 
-from backends import Backends
 from . import Base
 from .utils import get_expired_datetime
 
@@ -29,12 +28,13 @@ class Question(Base):
 
     id = db.Column(db.BIGINT, primary_key=True)
     game_id = db.Column(db.BIGINT, db.ForeignKey('games.id'))
-    right_object_id = db.Column(db.Integer, db.ForeignKey('objects.id'))
+    room_id = db.Column(db.BIGINT)
+    ask_date = db.Column(db.DateTime, default=datetime.now, index=True)
+    right_answers = db.Column(db.JSON)
     associated_user_id = db.Column(db.BIGINT, db.ForeignKey('users.id'),
                                    nullable=True)
     answers = relationship('Answer', back_populates='question')
     game = relationship('Game', back_populates='questions')
-    right_object = relationship('Object', back_populates='questions')
     associated_user = relationship('User', back_populates='questions')
 
 
@@ -82,7 +82,6 @@ class Object(Base):
     category_id = db.Column(db.BIGINT, db.ForeignKey('object_categories.id'))
     aliases = relationship('ObjectAlias', back_populates='object')
     category = relationship('ObjectCategory', back_populates='objects')
-    questions = relationship('Question', back_populates='right_object')
 
     __table_args__ = (db.UniqueConstraint('category_id', 'wikidata_id'),
                       db.UniqueConstraint('category_id', 'name'))
