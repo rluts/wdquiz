@@ -1,4 +1,4 @@
-import {QUIZ_ANSWER, QUIZ_LOADED} from './constants';
+import {QUIZ_NEW, QUIZ_ANSWER, QUIZ_LOADED} from './constants';
 import axios from 'axios';
 
 const apiUrl = 'http://localhost/api';
@@ -14,6 +14,12 @@ export const ask = () => {
         ask()
       });
   };
+};
+
+export const newQuiz = () => {
+  return {
+    type: QUIZ_NEW
+  }
 };
 
 export const quizLoaded =  (data) => {

@@ -12,6 +12,9 @@
       text-align: center;
         h3 {
           color: green;
+          &.notCorrect {
+            color: red;
+          }
         }
         .FormContainer {
            margin: 10px;

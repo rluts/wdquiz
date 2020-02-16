@@ -1,4 +1,4 @@
-import {QUIZ_ANSWER, QUIZ_LOADED} from "../actions/constants";
+import {QUIZ_ANSWER, QUIZ_LOADED, QUIZ_NEW} from "../actions/constants";
 
 const initialState = {
   loading: true,
@@ -11,6 +11,7 @@ const quiz = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        answered: false,
         question: action.question,
         imageUrl: action.imageUrl,
         questionId: action.questionId
@@ -18,7 +19,15 @@ const quiz = (state = initialState, action) => {
     case QUIZ_ANSWER:
       return {
         ...state,
-        right: action.right
+        right: action.right,
+        answered: true
+      };
+    case QUIZ_NEW:
+      return {
+        ...state,
+        answered: false,
+        right: false,
+        loading: true,
       };
     default:
       return state
