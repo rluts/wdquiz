@@ -7,10 +7,11 @@ from settings import BASE_PATH
 class File:
     allowed_types = []
 
-    def __init__(self, url: str, prefix: int):
+    def __init__(self, url: str, prefix: int, question_id: int):
         self.url = url
         self.file_type = self.get_file_type()
         self.prefix = prefix
+        self.question_id = question_id
         self.filename = self.get_filename()
         self.file = self.download()
 
@@ -30,7 +31,7 @@ class File:
         return filename
 
     def get_filename(self):
-        return f'{BASE_PATH}/media/file{self.prefix}'
+        return f'{BASE_PATH}/media/{self.question_id}_file_{self.prefix}'
 
     def check_file_type(self, file_type):
         if file_type not in self.allowed_types:

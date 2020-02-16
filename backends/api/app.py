@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify
 
 from core.exceptions import FileTypeError, NotFoundError
 from converters.images import Image
+from db import session
+from db.models import QuestionType
 from quiz import Quiz
 
 
@@ -21,12 +23,14 @@ def ask():
         room_id=SPA_ROOM_ID,
         backend=BACKEND
     )
-    img, answers = quiz.img_ask()
+    question_type = session.query(QuestionType).get(SPA_GAME_CATEGORY_ID)
+    question = question_type.text if question_type else None
+    img, answers, question_id = quiz.ask_image_type()
 
     try:
-        image = Image(img, quiz.room_id)
+        image = Image(img, quiz.room_id, question_id)
         image = str(image).split('/')[-1]
-        return jsonify(url=f'media/{image}')
+        return jsonify(url=f'/media/{image}', question_id=question_id, question=question)
     except (FileTypeError, NotFoundError) as e:
         return e.msg, e.code
     except AttributeError:

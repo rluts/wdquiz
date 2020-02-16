@@ -1,21 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import classes from './components/Quiz/Quiz.module.scss'
+import Quiz from "./components/Quiz/Quiz";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Loading...
-        </p>
-        <button className="App-link">
-          Next
-        </button>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+    render() {
+        return (
+            <div className={classes.QuizContainer}>
+                <Quiz question={"What the country is this?"} imageUrl={"/media/65_file_1.png"} questionId={"65"}/>
+            </div>
+        );
+    }
 }
 
-export default App;
+export default App

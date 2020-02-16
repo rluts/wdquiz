@@ -19,9 +19,14 @@ class Quiz:
         self.client = Client()
 
     @classmethod
-    def get_answers(cls, room_id):
-        obj = session.query(Question).filter_by(
-            room_id=room_id).order_by(desc(Question.ask_date)).first()
+    def get_answers(cls, room_id=None, questions_id=None):
+        if not any([room_id, questions_id]):
+            raise ValueError('Room ID or Question ID is required')
+        if room_id:
+            obj = session.query(Question).filter_by(
+                room_id=room_id).order_by(desc(Question.ask_date)).first()
+        else:
+            obj = session.query(Question).get(questions_id)
         if obj:
             return json.loads(obj.right_answers)
 
@@ -50,7 +55,7 @@ class Quiz:
             right_answers=answers_json)
         session.add(question)
         session.commit()
-        return answers
+        return answers, question.id
 
     def get_image_url_from_object(self, obj, question_type):
         prop = self.client.get(question_type.image_question_wikidata_prop)
@@ -59,10 +64,15 @@ class Quiz:
         image_url = img.image_url if img else None
         return image_url
 
-    def img_ask(self):
+    @staticmethod
+    def _format_result_image_type(image_url, answer_list, question_id):
+        return
+
+    def ask_image_type(self):
         question_type = self.get_random_type()
         obj = self.get_random_object()
         if not obj:
             return None, None
         image_url = self.get_image_url_from_object(obj, question_type)
-        return image_url, self.get_answer_list(obj)
+        answer_list, question_id = self.get_answer_list(obj)
+        return image_url, answer_list, question_id

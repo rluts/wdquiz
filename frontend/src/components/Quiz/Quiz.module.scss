@@ -1,0 +1,22 @@
+.QuizContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30px;
+    .Quiz {
+      border-radius: 14px 14px 14px 14px;
+      border: 6px solid #d6d6d6;
+      color: black;
+      width: 60%;
+      background-color: #ffffff;
+      text-align: center;
+        .ButtonContainer {
+           margin: 10px;
+        }
+        .QuizImage {
+          width: 100%;
+        }
+    }
+}
+
+
