@@ -12,7 +12,7 @@ from .game import Game
 class Quiz:
     def __init__(self, initiator, category_id, room_id, backend):
         self.room_id = room_id
-        self.game = Game.get_game(room_id) or Game(
+        self.game = Game.get_game(room_id, category_id) or Game(
             initiator, category_id, room_id, backend)
         self.question_types = session.query(QuestionType).filter_by(
             category_id=category_id).all()
@@ -75,4 +75,4 @@ class Quiz:
             return None, None
         image_url = self.get_image_url_from_object(obj, question_type)
         answer_list, question_id = self.get_answer_list(obj)
-        return image_url, answer_list, question_id
+        return image_url, answer_list, question_id, question_type.text

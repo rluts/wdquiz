@@ -1,21 +1,25 @@
-import {QUIZ_LOAD, QUIZ_LOADED} from "../actions/constants";
+import {QUIZ_ANSWER, QUIZ_LOADED} from "../actions/constants";
 
 const initialState = {
-  loading: true
+  loading: true,
+  question: null
 };
 
 const quiz = (state = initialState, action) => {
   switch (action.type) {
     case QUIZ_LOADED:
-      return [
+      return {
         ...state,
-        {}
-      ];
-    case QUIZ_LOAD:
-      return [
+        loading: false,
+        question: action.question,
+        imageUrl: action.imageUrl,
+        questionId: action.questionId
+      };
+    case QUIZ_ANSWER:
+      return {
         ...state,
-        {}
-      ];
+        right: action.right
+      };
     default:
       return state
   }

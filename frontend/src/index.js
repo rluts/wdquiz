@@ -4,13 +4,13 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {createStore, applyMiddleware, compose} from 'redux';
-import quizReducer from "./reducers/quiz";
+import reducers from "./reducers";
 import ReduxThunk from 'redux-thunk';
 import {Provider} from "react-redux";
 
 
-const store = createStore(quizReducer, compose(applyMiddleware(ReduxThunk),
-    window.devToolsExtension ? window.devToolsExtension() : f => f,));
+const store = createStore(reducers, compose(applyMiddleware(ReduxThunk),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
 
 
 const app = (

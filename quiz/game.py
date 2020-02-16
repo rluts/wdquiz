@@ -29,9 +29,10 @@ class Game:
         session.commit()
 
     @classmethod
-    def get_game(cls, room_id):
+    def get_game(cls, room_id, category_id):
         game_db_obj = session.query(GameModel).filter(
             GameModel.room_id == room_id,
+            GameModel.category_id == category_id,
             GameModel.created_time < datetime.now() - timedelta(hours=1),
             GameModel.finished == false()
         ).first()

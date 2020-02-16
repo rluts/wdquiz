@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 from core.exceptions import FileTypeError, NotFoundError
 from converters.images import Image
@@ -8,14 +9,15 @@ from quiz import Quiz
 
 
 app = Flask(__name__)
+CORS(app)
 
 ANONYMOUS_USER_ID = 1
 SPA_ROOM_ID = 1
-SPA_GAME_CATEGORY_ID = 1
+SPA_GAME_CATEGORY_ID = 2
 BACKEND = 'api'
 
 
-@app.route('/ask', methods=['POST'])
+@app.route('/ask', methods=['POST', 'OPTIONS'])
 def ask():
     quiz = Quiz(
         initiator=ANONYMOUS_USER_ID,
@@ -23,12 +25,10 @@ def ask():
         room_id=SPA_ROOM_ID,
         backend=BACKEND
     )
-    question_type = session.query(QuestionType).get(SPA_GAME_CATEGORY_ID)
-    question = question_type.text if question_type else None
-    img, answers, question_id = quiz.ask_image_type()
+    img, answers, question_id, question = quiz.ask_image_type()
 
     try:
-        image = Image(img, quiz.room_id, question_id)
+        image = Image(img, quiz.room_id, question_id, convert_svg=False)
         image = str(image).split('/')[-1]
         return jsonify(url=f'/media/{image}', question_id=question_id, question=question)
     except (FileTypeError, NotFoundError) as e:
