@@ -33,16 +33,18 @@ class Quiz extends Component {
         this.props.loadQuiz()
     }
 
-    checkAnswer = () => {
+    checkAnswer = (event) => {
+        event.preventDefault();
         if (this.state.answer.trim()) {
             this.props.checkAnswer(this.state.answer)
+            this.setState({answer: ''})
         }
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.answered && this.props.right) {
             this.props.newQuiz();
-            setTimeout(() => {this.props.loadQuiz();}, 1000)
+            this.props.loadQuiz();
         }
     }
 
@@ -54,19 +56,19 @@ class Quiz extends Component {
         return (
             <div className={classes.Quiz}>
                 <h2>{this.props.question}</h2>
-                {this.props.answered ? this.props.right ? <h3>Correct</h3> : <h3>Not correct</h3>: null}
+                {this.props.answered || this.props.loading ? this.props.right ? <h3>Correct</h3> : !this.props.loading ? <h3>Not correct</h3>: null: null}
                 <div>
                     {this.props.imageUrl && !this.props.loading ?
                     <img  className={classes.QuizImage} src={'http://127.0.0.1' + this.props.imageUrl} alt={this.props.questionId} />
                     : <CircularProgress />
                     }
                 </div>
-                <div className={classes.FormContainer}>
-                    <TextField id="outlined-basic" label="Answer" onChange={this.handleChangeAnswer} variant="outlined" />
-                    <Button variant="contained" color="primary" onClick={this.checkAnswer} disableElevation>
+                <form className={classes.FormContainer} onSubmit={this.checkAnswer}>
+                    <TextField id="outlined-basic"  label="Answer" value={this.state.answer} onChange={this.handleChangeAnswer} variant="outlined" />
+                    <Button type="submit" variant="contained" color="primary" disableElevation>
                       Next >>
                     </Button>
-                </div>
+                </form>
             </div>
         );
     }

@@ -12,6 +12,7 @@ const quiz = (state = initialState, action) => {
         ...state,
         loading: false,
         answered: false,
+        right: false,
         question: action.question,
         imageUrl: action.imageUrl,
         questionId: action.questionId
@@ -26,7 +27,6 @@ const quiz = (state = initialState, action) => {
       return {
         ...state,
         answered: false,
-        right: false,
         loading: true,
       };
     default:
