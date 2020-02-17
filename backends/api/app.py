@@ -28,7 +28,8 @@ def ask():
     try:
         image = Image(img, quiz.room_id, question_id, convert_svg=False)
         image = str(image).split('/')[-1]
-        return jsonify(url=f'/media/{image}', question_id=question_id, question=question)
+        return jsonify(url=f'/media/{image}', question_id=question_id,
+                       question=question)
     except (FileTypeError, NotFoundError) as e:
         return e.msg, e.code
     except AttributeError:
@@ -38,9 +39,11 @@ def ask():
 @app.route('/check', methods=['POST'])
 def check():
     data = request.json
+
     result = data.get('answer')
+    question_id = data.get('questionId')
     if result:
-        if result in Quiz.get_answers(SPA_ROOM_ID):
+        if result in Quiz.get_answers(question_id=question_id):
             return jsonify(result='OK')
         else:
             return jsonify(result='FAIL')

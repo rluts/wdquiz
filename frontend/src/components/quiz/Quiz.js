@@ -14,8 +14,8 @@ const mapDispatchToProps = dispatch => {
     loadQuiz: () => {
         dispatch(ask());
     },
-    checkAnswer: (answer) => {
-        dispatch(check(answer))
+    checkAnswer: (answer, questionId) => {
+        dispatch(check(answer, questionId))
     },
     newQuiz: () => {
         dispatch(newQuiz())
@@ -36,7 +36,7 @@ class Quiz extends Component {
     checkAnswer = (event) => {
         event.preventDefault();
         if (this.state.answer.trim()) {
-            this.props.checkAnswer(this.state.answer);
+            this.props.checkAnswer(this.state.answer, this.props.questionId);
             this.setState({answer: ''})
         }
     };
@@ -59,7 +59,7 @@ class Quiz extends Component {
                 {this.props.answered || this.props.loading ? this.props.right ? <h3>Correct</h3> : !this.props.loading ? <h3>Not correct</h3>: null: null}
                 <div>
                     {this.props.imageUrl && !this.props.loading ?
-                    <img  className={classes.QuizImage} src={'http://127.0.0.1' + this.props.imageUrl} alt={this.props.questionId} />
+                    <img  className={classes.QuizImage} src={this.props.imageUrl} alt={this.props.questionId} />
                     : <CircularProgress />
                     }
                 </div>

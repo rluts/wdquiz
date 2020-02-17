@@ -19,14 +19,14 @@ class Quiz:
         self.client = Client()
 
     @classmethod
-    def get_answers(cls, room_id=None, questions_id=None):
-        if not any([room_id, questions_id]):
+    def get_answers(cls, room_id=None, question_id=None):
+        if not any([room_id, question_id]):
             raise ValueError('Room ID or Question ID is required')
         if room_id:
             obj = session.query(Question).filter_by(
                 room_id=room_id).order_by(desc(Question.ask_date)).first()
         else:
-            obj = session.query(Question).get(questions_id)
+            obj = session.query(Question).get(question_id)
         if obj:
             return json.loads(obj.right_answers)
 

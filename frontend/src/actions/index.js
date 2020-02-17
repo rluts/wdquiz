@@ -1,7 +1,7 @@
 import {QUIZ_NEW, QUIZ_ANSWER, QUIZ_LOADED} from './constants';
 import axios from 'axios';
 
-const apiUrl = 'http://localhost/api';
+const apiUrl = '/api';
 
 export const ask = () => {
   return (dispatch) => {
@@ -31,9 +31,9 @@ export const quizLoaded =  (data) => {
   }
 };
 
-export const check = (answer) => {
+export const check = (answer, questionId) => {
   return (dispatch) => {
-    return axios.post(`${apiUrl}/check`, {answer})
+    return axios.post(`${apiUrl}/check`, {answer, questionId})
       .then(response => {
         dispatch(answerChecked(response.data))
       })
