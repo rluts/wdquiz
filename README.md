@@ -5,8 +5,9 @@ Quiz app with using Wikidata for data factories
 ## Installation:
 ### using docker
 * cp .env_DEFAULT .env
-* cp .alembic.ini_DEFAULT .env
+* cp alembic.ini_DEFAULT alembic.ini
 * docker-compose up -d
+* docker exec -it <docker id of app container from 'docker ps'> python run_factory.py
 
 ## Run factories
 python run_factory.py - fill the database with countries
