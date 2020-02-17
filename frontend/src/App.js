@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import classes from './components/Quiz/Quiz.module.scss'
-import Quiz from "./components/Quiz/Quiz";
+import classes from './components/quiz/Quiz.module.scss'
+import Quiz from "./components/quiz/Quiz";
 
 
 class App extends Component {
