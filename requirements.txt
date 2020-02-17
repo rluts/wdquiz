@@ -9,6 +9,7 @@ Click==7.0
 cssselect2==0.2.2
 defusedxml==0.6.0
 Flask==1.1.1
+flask-cors==3.0.8
 idna==2.8
 isodate==0.6.0
 itsdangerous==1.1.0

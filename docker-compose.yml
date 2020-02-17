@@ -4,12 +4,13 @@ services:
     image: postgres:10
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    ports:
-      - 5439:5432
+    networks:
+      - wdquiznetwork
     environment:
       - POSTGRES_DB=wdquizdb
       - POSTGRES_USER=wdquizdbuser
       - POSTGRES_PASSWORD=wdquizdbpassword
+
   app:
     build: .
     command: bash -c 'alembic upgrade head && python -m flask run -h 0.0.0.0'
@@ -19,12 +20,12 @@ services:
       - ./.bash_history:/root/.bash_history
     depends_on:
       - postgres
+    networks:
+      - wdquiznetwork
     environment:
       - IPYTHONDIR=/app/.ipython
     env_file:
       - .env
-    ports:
-      - 5000:5000
 
   nginx:
     build: ./nginx
@@ -32,8 +33,31 @@ services:
       - app
     volumes:
       - ./media/:/app/media
+    links:
+      - frontend
+      - app
     ports:
       - 80:80
+    networks:
+      - wdquiznetwork
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile_frontend
+    environment:
+      - APP_ENV=dev
+    depends_on:
+      - app
+    networks:
+      - wdquiznetwork
+    volumes:
+      - ./frontend:/app/src
 
 volumes:
   postgres_data:
+
+
+networks:
+  wdquiznetwork:
+    driver: bridge
