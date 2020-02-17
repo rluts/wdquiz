@@ -36,7 +36,7 @@ class Quiz extends Component {
     checkAnswer = (event) => {
         event.preventDefault();
         if (this.state.answer.trim()) {
-            this.props.checkAnswer(this.state.answer)
+            this.props.checkAnswer(this.state.answer);
             this.setState({answer: ''})
         }
     };

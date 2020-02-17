@@ -10,8 +10,8 @@ export const ask = () => {
         dispatch(quizLoaded(response.data))
       })
       .catch(error => {
-        console.log(error)
-        ask()
+        console.warn(error.response);
+        dispatch(ask())
       });
   };
 };

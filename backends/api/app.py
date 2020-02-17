@@ -3,8 +3,6 @@ from flask_cors import CORS
 
 from core.exceptions import FileTypeError, NotFoundError
 from converters.images import Image
-from db import session
-from db.models import QuestionType
 from quiz import Quiz
 
 
@@ -13,7 +11,7 @@ CORS(app)
 
 ANONYMOUS_USER_ID = 1
 SPA_ROOM_ID = 1
-SPA_GAME_CATEGORY_ID = 2
+SPA_GAME_CATEGORY_ID = 1
 BACKEND = 'api'
 
 
