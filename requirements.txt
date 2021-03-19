@@ -16,7 +16,7 @@ itsdangerous==1.1.0
 Jinja2==2.11.1
 Mako==1.1.1
 MarkupSafe==1.1.1
-Pillow==7.0.0
+Pillow==8.1.1
 psycopg2==2.8.4
 pycparser==2.19
 pyparsing==2.4.6
